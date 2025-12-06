@@ -1,0 +1,6 @@
+# Ansible / local
+*.retry
+*.pyc
+.vscode/
+.vagrant/
+.vault_pass.txt

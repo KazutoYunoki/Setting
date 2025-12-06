@@ -1,0 +1,30 @@
+---
+- name: Set SSH key defaults
+  set_fact:
+    target_user: "{{ target_user | default(ansible_env.USER) }}"
+    target_home: "{{ target_home | default(ansible_env.HOME) }}"
+    generate_ssh_key: "{{ generate_ssh_key | default(true) }}"
+    ssh_key_name: "{{ ssh_key_name | default('id_rsa') }}"
+  tags: [ssh]
+
+- name: Ensure .ssh directory exists
+  file:
+    path: "{{ target_home }}/.ssh"
+    state: directory
+    owner: "{{ target_user }}"
+    group: "{{ target_user }}"
+    mode: "0700"
+  become: yes
+  tags: [ssh]
+
+- name: Generate RSA SSH keypair (if missing) using openssh_keypair
+  openssh_keypair:
+    path: "{{ target_home }}/.ssh/{{ ssh_key_name }}"
+    type: rsa
+    size: 4096
+    force: no
+    comment: "{{ ssh_key_comment | default(target_user ~ '@' ~ inventory_hostname) }}"
+  become: yes
+  become_user: "{{ target_user }}"
+  when: generate_ssh_key | bool
+  tags: [ssh, ssh_key]

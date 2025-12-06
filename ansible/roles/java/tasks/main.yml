@@ -1,0 +1,7 @@
+---
+- name: Install OpenJDK (Debian/Ubuntu)
+  apt:
+    name: "{{ java_apt_packages }}"
+    state: present
+  when: ansible_facts['pkg_mgr'] == 'apt'
+  become: yes

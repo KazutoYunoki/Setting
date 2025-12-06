@@ -1,0 +1,3 @@
+---
+java_apt_packages:
+  - openjdk-17-jdk
