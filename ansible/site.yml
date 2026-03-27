@@ -1,6 +1,5 @@
 ---
 - hosts: local
-  become: yes
   roles:
     - common
-    - { role: java, tags: ["java"] }
+    - python

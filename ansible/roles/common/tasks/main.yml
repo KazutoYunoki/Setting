@@ -1,4 +1,10 @@
 ---
+- name: Install packages from vars.yml
+  package:
+    name: "{{ packages }}"
+    state: present
+  become: yes
+
 - name: Set SSH key defaults
   set_fact:
     target_user: "{{ target_user | default(ansible_env.USER) }}"

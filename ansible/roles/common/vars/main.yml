@@ -3,3 +3,6 @@
 packages:
   - git
   - zsh
+  - openjdk-17-jdk
+  - wget
+  - gpg
