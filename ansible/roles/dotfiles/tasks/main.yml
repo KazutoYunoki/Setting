@@ -1,0 +1,47 @@
+---
+# dotfiles をリポジトリで一元管理し、システムからは symlink で参照する。
+# 既存の実ファイル(symlink でないもの)は上書き前にタイムスタンプ付きでバックアップする。
+
+- name: Resolve absolute path of dotfiles directory
+  command: realpath "{{ playbook_dir }}/../dotfiles"
+  register: dotfiles_abs
+  changed_when: false
+
+- name: Set dotfiles source dir fact
+  set_fact:
+    dotfiles_src_dir: "{{ dotfiles_abs.stdout }}"
+
+- name: Ensure destination parent directories exist
+  file:
+    path: "{{ item.dest | dirname }}"
+    state: directory
+    mode: "0755"
+  loop: "{{ dotfiles_links }}"
+
+- name: Check current state of each destination
+  stat:
+    path: "{{ item.dest }}"
+  loop: "{{ dotfiles_links }}"
+  register: dotfiles_stat
+
+- name: Backup existing real files (not symlinks) before linking
+  copy:
+    src: "{{ item.stat.path }}"
+    dest: "{{ item.stat.path }}.bak-{{ ansible_date_time.iso8601_basic_short }}"
+    remote_src: yes
+  loop: "{{ dotfiles_stat.results }}"
+  loop_control:
+    label: "{{ item.item.dest }}"
+  when:
+    - item.stat.exists
+    - not item.stat.islnk
+
+- name: Create symlinks from dotfiles repo to system paths
+  file:
+    src: "{{ dotfiles_src_dir }}/{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+    force: yes
+  loop: "{{ dotfiles_links }}"
+  loop_control:
+    label: "{{ item.dest }} -> {{ item.src }}"

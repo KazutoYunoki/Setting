@@ -1,0 +1,5 @@
+---
+# インストールする JDK。複数入れておき、既定は apt の alternatives が最新(21)を自動選択する。
+java_packages:
+  - openjdk-17-jdk
+  - openjdk-21-jdk

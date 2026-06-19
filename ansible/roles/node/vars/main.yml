@@ -1,0 +1,4 @@
+---
+nvm_version: "v0.40.1"
+# nvm install に渡すバージョン。"24" でその時点の 24.x 最新が入る。
+node_version: "24"

@@ -1,5 +1,9 @@
 ---
 - hosts: local
   roles:
-    - common
-    - python
+    - { role: common,   tags: [common] }    # 基本パッケージ + SSH 鍵
+    - { role: shell,    tags: [shell] }      # zsh + Oh My Zsh + 既定シェル
+    - { role: java,     tags: [java] }       # OpenJDK 17 / 21
+    - { role: python,   tags: [python] }     # pyenv + virtualenv
+    - { role: node,     tags: [node] }       # nvm + Node.js
+    - { role: dotfiles, tags: [dotfiles] }   # .zshrc 等を symlink で配置

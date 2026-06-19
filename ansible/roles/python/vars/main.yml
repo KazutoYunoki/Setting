@@ -1,6 +1,5 @@
 ---
-target_user: "{{ ansible_user }}"
-pyenv_root: "/home/{{ target_user }}/.pyenv"
+pyenv_root: "{{ ansible_env.HOME }}/.pyenv"
 
 pyenv_dependencies:
   - make
@@ -23,13 +22,14 @@ pyenv_dependencies:
   - git
 
 python_versions:
-  - "3.11.6"
   - "3.10.13"
+  - "3.11.6"
+  - "3.12.3"
 
 global_python_version: "3.11.6"
 
 virtualenvs:
-  - name: "env311"
-    version: "3.11.6"
-  - name: "env310"
-    version: "3.10.13"
+  - { name: "env310",         version: "3.10.13" }
+  - { name: "env311",         version: "3.11.6" }
+  - { name: "blog_writer",    version: "3.11.6" }
+  - { name: "shortcutwidget", version: "3.12.3" }

@@ -1,0 +1,5 @@
+[user]
+	email = kazuto233@gmail.com
+	name = KazutoYunoki
+[core]
+	excludesfile = ~/.config/git/ignore

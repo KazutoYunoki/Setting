@@ -12,6 +12,9 @@ vim.o.expandtab = true
 vim.o.shiftwidth = 2
 vim.o.tabstop = 2
 
+vim.optnumber = true
+vim.opt.relativenumber = false
+
 -- ===============================
 -- VSCode内でのみ有効にする設定
 -- ===============================
@@ -26,9 +29,9 @@ if vim.g.vscode then
       vim.fn.VSCodeNotify(cmd)
     end
   end
-  
+
   -- ~/.config/nvim/init.lua または %USERPROFILE%\AppData\Local\nvim\init.lua
-  
+
   -- ファイルを右のペインに移動
   keymap("n", "<C-l>", vscode_cmd("workbench.action.moveEditorToNextGroup"), opts)
 

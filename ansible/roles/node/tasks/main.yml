@@ -1,0 +1,21 @@
+---
+# nvm + Node.js。nvm 初期化は dotfiles の .zshrc 側で行うため、ここでは導入のみ。
+
+- name: Install nvm (clone)
+  git:
+    repo: https://github.com/nvm-sh/nvm.git
+    dest: "{{ ansible_env.HOME }}/.nvm"
+    version: "{{ nvm_version }}"
+    depth: 1
+    update: no
+
+- name: Install Node.js via nvm and set as default
+  shell: |
+    export NVM_DIR="$HOME/.nvm"
+    . "$NVM_DIR/nvm.sh"
+    nvm install {{ node_version }}
+    nvm alias default {{ node_version }}
+  args:
+    executable: /bin/bash
+  register: nvm_install
+  changed_when: "'already installed' not in nvm_install.stderr + nvm_install.stdout"

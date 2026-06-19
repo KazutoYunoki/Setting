@@ -1,0 +1,89 @@
+{
+  // --- 外観 / エディタ ---
+  "workbench.iconTheme": "material-icon-theme",
+  "editor.minimap.enabled": false,
+  "editor.fontFamily": "JetBrains Mono, monospace",
+  "editor.fontLigatures": true,
+  "editor.formatOnSave": true,
+  "editor.largeFileOptimizations": true,
+  "editor.maxTokenizationLineLength": 2000,
+  "explorer.autoReveal": false,
+  "workbench.editor.limit.enabled": true,
+  "workbench.startupEditor": "none",
+
+  // --- フォーマッタ(グローバルは prettier。Java だけ言語サーバーに上書き) ---
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "notebook.formatOnCellExecution": true,
+  "[java]": {
+    "editor.defaultFormatter": "redhat.java",
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4,
+    "editor.detectIndentation": false,
+  },
+
+  // --- import 自動更新(TS/JS で統一) ---
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+
+  // --- TypeScript ---
+  "typescript.tsserver.maxTsServerMemory": 4096,
+  "typescript.disableAutomaticTypeAcquisition": true,
+
+  // --- Java ---
+  "java.referencesCodeLens.enabled": false,
+  "java.jdt.ls.vmargs": "-Xms512m -Xmx3G -XX:+UseG1GC -Dfile.encoding=UTF-8",
+
+  // --- Copilot("*": true で全有効。例外のみ列挙) ---
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": true,
+  },
+
+  // --- Neovim ---
+  "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
+  "vscode-neovim.compositeKeys": {
+    "jk": {
+      "command": "vscode-neovim.escape",
+    },
+  },
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1,
+  },
+
+  // --- Git ---
+  "git.confirmSync": false,
+  "git.autofetch": true,
+  "git.autorefresh": true,
+
+  // --- 除外(glob は "**/" 始まりが正。先頭 "/" は無効になる) ---
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/build/**": true,
+    "**/dist/**": true,
+    "**/.gradle/**": true,
+    "**/.idea/**": true,
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/build": true,
+    "**/dist": true,
+    "**/.git": true,
+    "frontend/src/generated": true,
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/build": true,
+    "**/dist": true,
+  },
+  "search.followSymlinks": false,
+
+  // --- その他 ---
+  "telemetry.telemetryLevel": "off",
+  "claudeCode.preferredLocation": "panel",
+  "git.enableSmartCommit": true,
+}

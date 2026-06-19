@@ -1,0 +1,9 @@
+---
+# リポジトリ dotfiles/ 配下のファイルを、システム上の各パスへ symlink する定義。
+# src は dotfiles/ からの相対パス、dest は実際に配置される絶対パス。
+dotfiles_links:
+  - { src: "zshrc",                       dest: "{{ ansible_env.HOME }}/.zshrc" }
+  - { src: "gitconfig",                   dest: "{{ ansible_env.HOME }}/.gitconfig" }
+  - { src: "config/git/ignore",           dest: "{{ ansible_env.HOME }}/.config/git/ignore" }
+  - { src: "config/nvim/init.lua",        dest: "{{ ansible_env.HOME }}/.config/nvim/init.lua" }
+  - { src: "config/Code/User/settings.json", dest: "{{ ansible_env.HOME }}/.config/Code/User/settings.json" }

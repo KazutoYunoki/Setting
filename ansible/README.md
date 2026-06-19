@@ -1,21 +1,42 @@
-# Ansible for my local Linux PC (minimal starter)
+# Ansible (構成管理本体)
 
-このリポジトリは自分の PC（localhost）向けの最小限の Ansible 構成です。
-目的は設定をコードとして残し、再現/復元を容易にすることです。
+このディレクトリは PC(localhost)の環境を再現するための Ansible 構成です。
+通常はリポジトリ直下の `bootstrap.sh` から実行されます。
 
-使い方（ローカルで実行）:
+## 直接実行する場合
 
-1. 必要なら ansible をインストール:
-   sudo apt update && sudo apt install -y ansible
+```bash
+cd ansible
+ansible-playbook -i inventory.ini site.yml --ask-become-pass
+```
 
-2. プレイブック実行:
-   ansible-playbook -i inventory.ini site.yml
+特定の role だけ適用したいとき(tags は未設定なので role を絞るなら一時的に site.yml を編集するか `--start-at-task` を利用):
 
-カスタマイズ:
+```bash
+# 例: dotfiles の symlink だけ確認したい (dry-run)
+ansible-playbook -i inventory.ini site.yml --check --diff
+```
 
-- roles/common/vars/main.yml の packages リストを編集してインストールするパッケージを追加してください。
+## role 一覧
 
-おすすめ:
+| role | 役割 |
+|------|------|
+| common | 基本パッケージ(git/wget/curl/gpg/build-essential/gradle) + SSH 鍵生成 |
+| shell | zsh + Oh My Zsh + 既定シェルを zsh に |
+| java | OpenJDK 17 / 21 |
+| python | pyenv + pyenv-virtualenv + Python 各版 + venv |
+| node | nvm + Node.js |
+| dotfiles | `dotfiles/` のファイルをシステムへ symlink(既存は .bak へ退避) |
 
-- Git で管理して変更履歴を残す
-- role を増やして dotfiles や desktop アプリ、docker などを分離する
+## カスタマイズ箇所
+
+- パッケージ: `roles/common/vars/main.yml`
+- JDK: `roles/java/vars/main.yml`
+- Python バージョン/venv: `roles/python/vars/main.yml`
+- Node バージョン: `roles/node/vars/main.yml`
+- symlink 対象: `roles/dotfiles/vars/main.yml`
+
+## 依存
+
+`ansible` パッケージ(apt)に同梱の community.crypto / community.general を利用します。
+`ansible-core` のみの環境では別途 `ansible-galaxy collection install community.crypto` が必要です。

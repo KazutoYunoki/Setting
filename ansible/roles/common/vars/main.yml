@@ -1,8 +1,9 @@
 ---
-# ここにインストールしたいパッケージを列挙
+# 基本パッケージ。言語固有(JDK/Python/Node)は各 role が担当する。
 packages:
   - git
-  - zsh
-  - openjdk-17-jdk
   - wget
+  - curl
   - gpg
+  - build-essential
+  - gradle
